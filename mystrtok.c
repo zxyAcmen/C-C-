@@ -87,19 +87,26 @@ char * my_strtok(char * src, char *str)
 			return NULL;
 
 	//此时的tmpSrc 指向的是分割符位置,减去不是以分割符开头的源字符位置,得到分割出来的字符串,把最后位置0 防止乱码
-	tmpBuf[tmpSrc-pSrc] = '\0';
+	//tmpBuf[tmpSrc-pSrc] = '\0';
+	if(*tmpSrc == '\0')
+	{
+		pSrc = tmps;
+		
+	}
+	else
+	{
+		tmpBuf[tmpSrc - pSrc] = '\0';
+		pSrc = tmpSrc+1;   
+	}
 
-	//把静态字符跳过分割符的后一个位置
-	pSrc =tmpSrc+1;        
 	return tmpBuf;
 }
 
 int main()
 {
-	char src[] = "   -   This,       a          sample string.............";
+	char src[] = "   -   This,       a          sample string............,d";
 	char * pch;
 	char str[] = " ,.-";
-
 	pch = my_strtok(src, str);
 
 	while (pch != NULL)
